@@ -1,12 +1,6 @@
 const res = require ('express/lib/response');
 const mysql = require('mysql2');
-
-const connection = mysql.createConnection({
-        host: '34.67.146.233',
-        user: 'root',
-        password: 'BuildingSoFlo',
-        database: 'Commerce'
-});
+        
 
 // const query = 'SELECT * FROM Products';
 
@@ -31,9 +25,25 @@ const connection = mysql.createConnection({
         return(results)
     }
 
-const createProduct = async(product)
+const createProduct = async(product) => {
+    const insertQuery = `INSERT INTO Products (Description, SKU, UserId)
+    VALUES ('${product.description}', '${product.sku}', '${product.UserId}')`
+
+    const [results, fields] = await connection.promise().query(insertQuery);
+
+    console.log(results);
+
+    return results;
+}
     // close the database connection
-    getAllProducts()
+
+    // createProduct({
+    //     description: 'Malibu new Product',
+    //     sku: 'malibu1234',
+    //     UserId: 1
+    // });
+   
+   getAllProducts()
     connection.end();
 
 
